@@ -1,6 +1,7 @@
 const SHARED_BLOB_URL = 'https://jsonblob.com/api/jsonBlob/019fd3d1-c421-785f-8408-22d98ab735b9';
 const STORAGE_KEY = 'zayProjectBoardEntries';
 const PAGE_SIZE = 6;
+const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1534687724483903558/wUISE3NMNjojzHcrsy6U7Wf4ysZSIAKIx26gKDsEe9HlYkA78G-G8R8ZPaW_YRuV8Z31';
 
 const defaultEntries = [
   {
@@ -64,6 +65,55 @@ function formatTimestamp(value) {
     dateStyle: 'medium',
     timeStyle: 'short'
   });
+}
+
+function buildProjectUrl(projectLink) {
+  if (!projectLink) return window.location.href;
+  try {
+    return new URL(projectLink, window.location.href).toString();
+  } catch (error) {
+    return projectLink;
+  }
+}
+
+async function sendDiscordWebhook(entry) {
+  if (!DISCORD_WEBHOOK_URL) return;
+
+  const payload = {
+    content: 'A new upload was posted in the Other Projects board.',
+    embeds: [
+      {
+        title: 'New upload posted',
+        description: `${entry.displayName} shared "${entry.projectTitle}".`,
+        url: buildProjectUrl(entry.projectLink),
+        color: 65280,
+        fields: [
+          {
+            name: 'Description',
+            value: entry.description || 'No description provided.'
+          },
+          {
+            name: 'Posted by',
+            value: entry.displayName
+          }
+        ],
+        timestamp: entry.postedAt,
+        footer: {
+          text: 'Zay\'s Projects'
+        }
+      }
+    ]
+  };
+
+  try {
+    await fetch(DISCORD_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } catch (error) {
+    console.warn('Could not send Discord webhook notification', error);
+  }
 }
 
 async function renderBoard(page = 1) {
@@ -161,6 +211,7 @@ async function handleSubmit(event) {
   const state = await loadBoardState();
   const entries = [entry, ...state.projects];
   await saveBoardState({ ...state, projects: entries });
+  await sendDiscordWebhook(entry);
   closeModal();
   renderBoard(1);
 }
