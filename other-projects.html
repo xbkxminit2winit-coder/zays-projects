@@ -52,23 +52,23 @@
 
         <form id="projectForm" class="project-form">
           <label>
-            Display name
+            <span class="required-label">Display name <span class="required-marker">*</span></span>
             <input type="text" name="displayName" placeholder="What should people call you?" required />
           </label>
 
           <label>
-            Project title
+            <span class="required-label">Project title <span class="required-marker">*</span></span>
             <input type="text" name="projectTitle" placeholder="My project" required />
           </label>
 
           <label>
-            Project link
+            <span class="required-label">Project link <span class="required-marker">*</span></span>
             <input type="url" name="projectLink" placeholder="https://example.com" required />
           </label>
 
           <label>
-            Description
-            <textarea name="description" rows="3" placeholder="Short description"></textarea>
+            <span class="required-label">Description <span class="required-marker">*</span></span>
+            <textarea name="description" rows="3" placeholder="Short description" required></textarea>
           </label>
 
           <div class="preview-panel">

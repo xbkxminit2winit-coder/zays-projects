@@ -116,30 +116,32 @@ img {
 
 .hero-section {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 32px;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  gap: 28px;
   align-items: start;
   padding-top: 24px;
 }
 
 .home-overview {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(240px, 0.8fr);
-  gap: 28px;
-  align-items: center;
-  margin-bottom: 32px;
-  padding-top: 24px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+  margin-bottom: 24px;
+  padding-top: 12px;
 }
 
 .counter-card {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 28px;
+  padding: 22px 24px;
   display: grid;
   justify-items: center;
-  gap: 16px;
+  gap: 10px;
   text-align: center;
+  min-height: 180px;
+  align-content: center;
 }
 
 .counter-card p {
@@ -155,18 +157,18 @@ img {
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 18px;
 }
 
 .page-card {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 28px;
+  padding: 22px;
   display: grid;
-  gap: 18px;
-  min-height: 260px;
+  gap: 14px;
+  min-height: 220px;
 }
 
 .page-card h3 {
@@ -319,6 +321,17 @@ img {
   display: grid;
   gap: 8px;
   color: var(--muted);
+}
+
+.required-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.required-marker {
+  color: #ff5d73;
+  font-weight: 700;
 }
 
 .project-form input,

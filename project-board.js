@@ -142,6 +142,12 @@ function updatePreview(formData) {
 async function handleSubmit(event) {
   event.preventDefault();
   const form = event.target;
+
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
+
   const data = new FormData(form);
   const entry = {
     id: Date.now(),
