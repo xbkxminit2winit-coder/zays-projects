@@ -1,0 +1,81 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, rgba(255, 220, 120, 0.14), transparent 20%),
+    linear-gradient(180deg, #08111f 0%, #0f1f35 100%);
+  color: #eef5ff;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+
+.game-shell {
+  width: min(900px, 100%);
+  background: rgba(18, 29, 47, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 30px;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.24);
+  overflow: hidden;
+}
+
+.game-shell header,
+.game-shell footer {
+  padding: 28px 32px;
+  text-align: center;
+}
+
+.game-shell header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.game-shell h1 {
+  margin: 0 0 12px;
+  font-size: clamp(2rem, 3vw, 3rem);
+  letter-spacing: 0.02em;
+}
+
+.game-shell p {
+  margin: 0;
+  color: #b8c7e4;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+#gameCanvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08), transparent 35%),
+    linear-gradient(180deg, #0b1530 0%, #0e1e38 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.game-shell footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.game-shell footer p {
+  color: #99a9c4;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 680px) {
+  body {
+    padding: 18px;
+  }
+
+  .game-shell header,
+  .game-shell footer {
+    padding: 22px 20px;
+  }
+}
