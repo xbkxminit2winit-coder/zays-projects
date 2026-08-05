@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Other Projects | Zay's Projects</title>
+    <link rel="icon" type="image/webp" href="https://cdn.discordapp.com/avatars/1069782674882961449/21dd35bb8925b62f285967e80fb272be.webp?size=1024" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-brand">
+        <img src="https://cdn.discordapp.com/avatars/1069782674882961449/21dd35bb8925b62f285967e80fb272be.webp?size=1024" alt="Site logo" class="brand-mark brand-image" />
+        <div>
+          <h1>Other Projects</h1>
+          <p>Community projects and uploads.</p>
+        </div>
+      </div>
+
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="releases.html" class="nav-link">Releases</a>
+        <a href="other-projects.html" class="nav-link active">Other Projects</a>
+        <a href="discord.html" class="nav-link">Discord</a>
+      </nav>
+    </header>
+
+    <main class="page-content">
+      <section class="section-intro">
+        <h2>Community project board</h2>
+        <p>Everyone can see projects posted here, and new uploads appear at the top.</p>
+        <div class="hero-actions">
+          <button id="openProjectModal" class="button button-primary">Add your project</button>
+        </div>
+      </section>
+
+      <section id="projectBoard" class="project-board-grid"></section>
+      <div id="paginationControls" class="pagination-controls"></div>
+    </main>
+
+    <footer class="site-footer">
+      <p>Projects posted here stay visible for everyone to discover.</p>
+    </footer>
+
+    <div id="projectModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="modalTitle">Add a project</h3>
+          <button id="closeModal" class="modal-close" type="button" aria-label="Close">×</button>
+        </div>
+
+        <form id="projectForm" class="project-form">
+          <label>
+            Display name
+            <input type="text" name="displayName" placeholder="What should people call you?" required />
+          </label>
+
+          <label>
+            Project title
+            <input type="text" name="projectTitle" placeholder="My project" required />
+          </label>
+
+          <label>
+            Project link
+            <input type="url" name="projectLink" placeholder="https://example.com" required />
+          </label>
+
+          <label>
+            Description
+            <textarea name="description" rows="3" placeholder="Short description"></textarea>
+          </label>
+
+          <div class="preview-panel">
+            <p class="preview-label">Preview</p>
+            <div id="projectPreview" class="preview-card"></div>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" id="cancelModal" class="button button-secondary">Cancel</button>
+            <button type="submit" class="button button-primary">Save project</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="project-board.js"></script>
+  </body>
+</html>
