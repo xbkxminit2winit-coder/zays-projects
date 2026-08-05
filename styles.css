@@ -116,6 +116,75 @@ img {
   padding-top: 24px;
 }
 
+.home-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(240px, 0.8fr);
+  gap: 28px;
+  align-items: center;
+  margin-bottom: 32px;
+  padding-top: 24px;
+}
+
+.counter-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.counter-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.counter-value {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 800;
+  color: white;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.page-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  display: grid;
+  gap: 18px;
+}
+
+.page-card h3 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.page-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.page-card .button {
+  justify-self: start;
+}
+
+@media (max-width: 900px) {
+  .home-overview,
+  .card-grid,
+  .hero-section,
+  .discord-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
 .eyebrow {
   display: inline-flex;
   align-items: center;

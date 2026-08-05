@@ -12,7 +12,7 @@
         <span class="brand-mark">Z</span>
         <div>
           <h1>Zay's Projects</h1>
-          <p>Professional home for your projects, releases, and community.</p>
+          <p>Where i post my projects :></p>
         </div>
       </div>
 
@@ -27,36 +27,37 @@
     <main>
       <section class="hero-section">
         <div class="hero-copy">
-          <p class="eyebrow">Welcome to your showcase</p>
-          <h2>Build, share, and manage your best work in one place.</h2>
+          <p class="eyebrow">My Projects :></p>
+          <h2>Welcome to your personal project hub. If you want a page to upload your projects, contact me on Discord!</h2>
           <p class="hero-text">
-            This site is crafted to present your projects with clarity, polish, and a modern professional experience.
-            Share your latest release notes, highlight your core builds, and invite your Discord community.
           </p>
-          <div class="hero-actions">
-            <a href="projects.html" class="button button-primary">View Projects</a>
-            <a href="discord.html" class="button button-secondary">Visit Discord</a>
-          </div>
         </div>
 
-        <div class="hero-card">
-          <div class="feature-card">
-            <h3>Your Signature Space</h3>
-            <p>Organize projects, releases, and community updates with a clean layout that feels like a polished portfolio.</p>
+        <div class="home-overview">
+          <div class="counter-card">
+            <p>Visitor count</p>
+            <div class="counter-value" id="visitorCount">0</div>
+            <p>Thank you for checking out your site.</p>
           </div>
-          <div class="feature-list">
-            <div>
-              <strong>Projects</strong>
-              <p>Highlight your best builds and keep visitors informed.</p>
-            </div>
-            <div>
-              <strong>Releases</strong>
-              <p>Track version updates, changelogs, and milestones with ease.</p>
-            </div>
-            <div>
-              <strong>Discord</strong>
-              <p>Bring your server front and center with a dedicated page.</p>
-            </div>
+
+          <div class="card-grid">
+            <article class="page-card">
+              <h3>Projects</h3>
+              <p>Take visitors straight to your project showcase and FlappyCat demo.</p>
+              <a href="projects.html" class="button button-primary">Open Projects</a>
+            </article>
+
+            <article class="page-card">
+              <h3>Releases</h3>
+              <p>Showcase your latest updates, notes, and version history.</p>
+              <a href="releases.html" class="button button-primary">Open Releases</a>
+            </article>
+
+            <article class="page-card">
+              <h3>Discord</h3>
+              <p>Send people to your server landing page with one click.</p>
+              <a href="discord.html" class="button button-primary">Open Discord</a>
+            </article>
           </div>
         </div>
       </section>
@@ -65,5 +66,13 @@
     <footer class="site-footer">
       <p>Designed for your personal project showcase — Zay.</p>
     </footer>
+
+    <script>
+      const countEl = document.getElementById('visitorCount');
+      const storageKey = 'zayProjectsVisitorCount';
+      const currentCount = Number(localStorage.getItem(storageKey) || 0) + 1;
+      localStorage.setItem(storageKey, currentCount);
+      countEl.textContent = currentCount.toLocaleString();
+    </script>
   </body>
 </html>
