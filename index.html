@@ -31,11 +31,10 @@
         <div class="hero-copy">
           <p class="eyebrow">My Projects :></p>
           <h2>Welcome to the project hub.</h2>
-          <p class="hero-text">FlappyCat Released Now!</p>
+          <p class="hero-text">Announcements/home page :)</p>
           <div class="announcement-card">
             <h3>Announcements</h3>
-            <p>New community uploads appear on the Other Projects page and are sorted by newest first.</p>
-          </div>
+            <p>FlappyCat Released now!>
         </div>
 
         <div class="home-overview">
@@ -74,10 +73,44 @@
 
     <script>
       const countEl = document.getElementById('visitorCount');
-      const storageKey = 'zayProjectsVisitorCount';
-      const currentCount = Number(localStorage.getItem(storageKey) || 0) + 1;
-      localStorage.setItem(storageKey, currentCount);
-      countEl.textContent = currentCount.toLocaleString();
+      const sharedBlobUrl = 'https://jsonblob.com/api/jsonBlob/019fd3d1-c421-785f-8408-22d98ab735b9';
+
+      async function loadSiteState() {
+        try {
+          const response = await fetch(sharedBlobUrl, { cache: 'no-store' });
+          if (response.ok) {
+            const data = await response.json();
+            if (data && typeof data.visitorCount === 'number') {
+              return { visitorCount: data.visitorCount, projects: Array.isArray(data.projects) ? data.projects : [] };
+            }
+          }
+        } catch (error) {
+          console.warn('Could not read shared site state', error);
+        }
+
+        return { visitorCount: 0, projects: [] };
+      }
+
+      async function saveSiteState(state) {
+        try {
+          await fetch(sharedBlobUrl, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(state)
+          });
+        } catch (error) {
+          console.warn('Could not sync visitor count to shared storage', error);
+        }
+      }
+
+      async function updateVisitorCount() {
+        const state = await loadSiteState();
+        const nextCount = (Number(state.visitorCount) || 0) + 1;
+        await saveSiteState({ ...state, visitorCount: nextCount });
+        countEl.textContent = nextCount.toLocaleString();
+      }
+
+      updateVisitorCount();
     </script>
   </body>
 </html>

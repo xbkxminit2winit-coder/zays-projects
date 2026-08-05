@@ -1,3 +1,4 @@
+const SHARED_BLOB_URL = 'https://jsonblob.com/api/jsonBlob/019fd3d1-c421-785f-8408-22d98ab735b9';
 const STORAGE_KEY = 'zayProjectBoardEntries';
 const PAGE_SIZE = 6;
 
@@ -12,20 +13,49 @@ const defaultEntries = [
   }
 ];
 
-function loadEntries() {
+async function loadBoardState() {
   try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    if (Array.isArray(saved) && saved.length) {
-      return saved;
+    const response = await fetch(SHARED_BLOB_URL, { cache: 'no-store' });
+    if (response.ok) {
+      const data = await response.json();
+      if (data && Array.isArray(data.projects)) {
+        return { projects: data.projects, visitorCount: Number(data.visitorCount || 0) };
+      }
+      if (Array.isArray(data)) {
+        return { projects: data, visitorCount: 0 };
+      }
     }
   } catch (error) {
-    console.warn('Could not read project board entries', error);
+    console.warn('Could not read shared project board data', error);
   }
-  return defaultEntries;
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (saved && Array.isArray(saved.projects)) {
+      return saved;
+    }
+    if (Array.isArray(saved)) {
+      return { projects: saved, visitorCount: 0 };
+    }
+  } catch (error) {
+    console.warn('Could not read cached project board entries', error);
+  }
+
+  return { projects: defaultEntries, visitorCount: 0 };
 }
 
-function saveEntries(entries) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+async function saveBoardState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+
+  try {
+    await fetch(SHARED_BLOB_URL, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(state)
+    });
+  } catch (error) {
+    console.warn('Could not sync project board to shared storage', error);
+  }
 }
 
 function formatTimestamp(value) {
@@ -36,10 +66,11 @@ function formatTimestamp(value) {
   });
 }
 
-function renderBoard(page = 1) {
+async function renderBoard(page = 1) {
   const board = document.getElementById('projectBoard');
   const pagination = document.getElementById('paginationControls');
-  const entries = loadEntries().sort((a, b) => new Date(b.postedAt) - new Date(a.postedAt));
+  const state = await loadBoardState();
+  const entries = [...state.projects].sort((a, b) => new Date(b.postedAt) - new Date(a.postedAt));
   const totalPages = Math.max(1, Math.ceil(entries.length / PAGE_SIZE));
 
   if (!board) return;
@@ -108,7 +139,7 @@ function updatePreview(formData) {
   `;
 }
 
-function handleSubmit(event) {
+async function handleSubmit(event) {
   event.preventDefault();
   const form = event.target;
   const data = new FormData(form);
@@ -121,15 +152,16 @@ function handleSubmit(event) {
     postedAt: new Date().toISOString()
   };
 
-  const entries = loadEntries();
-  entries.unshift(entry);
-  saveEntries(entries);
+  const state = await loadBoardState();
+  const entries = [entry, ...state.projects];
+  await saveBoardState({ ...state, projects: entries });
   closeModal();
   renderBoard(1);
 }
 
 window.addEventListener('DOMContentLoaded', () => {
   renderBoard();
+  setInterval(() => renderBoard(), 8000);
 
   document.getElementById('openProjectModal')?.addEventListener('click', openModal);
   document.getElementById('closeModal')?.addEventListener('click', closeModal);
