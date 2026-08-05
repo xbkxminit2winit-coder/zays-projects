@@ -252,12 +252,13 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 12px;
+  padding: 8px 14px;
   border-radius: 999px;
   background: rgba(90, 156, 255, 0.12);
   color: var(--primary);
   font-size: 0.9rem;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .project-card h3,
@@ -273,6 +274,18 @@ img {
   gap: 12px;
   color: var(--muted);
   font-size: 0.95rem;
+}
+
+.project-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(90, 156, 255, 0.15);
+  color: var(--primary);
+  font-size: 0.88rem;
+  font-weight: 700;
 }
 
 .timeline {
