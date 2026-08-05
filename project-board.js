@@ -99,7 +99,7 @@ async function sendDiscordWebhook(entry) {
         ],
         timestamp: entry.postedAt,
         footer: {
-          text: 'Zay\'s Projects'
+          text: 'Zay\'s Projects Website'
         }
       }
     ]
@@ -129,6 +129,15 @@ async function renderBoard(page = 1) {
   const visibleEntries = entries.slice(start, start + PAGE_SIZE);
 
   board.innerHTML = '';
+  if (!entries.length) {
+    const emptyState = document.createElement('div');
+    emptyState.className = 'empty-state';
+    emptyState.innerHTML = '<p>(no entries yet)</p>';
+    board.appendChild(emptyState);
+    pagination.innerHTML = '';
+    return;
+  }
+
   visibleEntries.forEach((entry) => {
     const card = document.createElement('article');
     card.className = 'community-project-card';
